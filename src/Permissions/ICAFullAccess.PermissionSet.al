@@ -19,6 +19,7 @@ permissionset 50100 "ICA Full Access"
         tabledata "ICA Email" = RIMD,
         tabledata "ICA Sent Message" = RIMD,
         tabledata "ICA Setup" = RIMD,
+        tabledata "ICA KPI" = RIMD,
         tabledata "Job Queue Entry" = RIMD,
         tabledata "Job Queue Category" = RIMD,
 
@@ -33,5 +34,6 @@ permissionset 50100 "ICA Full Access"
         page "ICA Sent Messages" = X,
         page "ICA Sent Message Card" = X,
         page "ICA Setup" = X,
-        page "ICA Role Center" = X;
+        page "ICA Role Center" = X,
+        page "ICA KPI" = X;
 }

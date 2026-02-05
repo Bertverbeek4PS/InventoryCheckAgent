@@ -19,12 +19,12 @@ codeunit 50103 "ICA Agent Metadata" implements IAgentMetadata
 
     procedure GetSummaryPageId(AgentUserId: Guid): Integer
     begin
-        exit(0); // No summary page
+        exit(Page::"ICA KPI");
     end;
 
     procedure GetAgentTaskMessagePageId(AgentUserId: Guid): Integer
     begin
-        exit(0); // Use default
+        exit(Page::"Agent Task Message Card"); // Use default
     end;
 
     procedure GetAgentAnnotations(AgentUserId: Guid; var Annotations: Record "Agent Annotation");

@@ -112,6 +112,6 @@ Compose a reply email with the following information:
 ```
 
 ## **Error Handling**
-- If the item cannot be found, ask the user for clarification
+- If the item cannot be found, ask for assistance
 - If vendor information is missing, note this in the reply and request guidance
 - If any step fails, explain the issue clearly and suggest next steps

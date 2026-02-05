@@ -30,7 +30,7 @@ page 50104 "ICA Setup"
             {
                 Caption = 'Agent Configuration';
 
-                field("Agent User Security ID"; Rec."Agent User Security ID")
+                field("User Security ID"; Rec."User Security ID")
                 {
                     ToolTip = 'The security ID of the agent user.';
                 }
@@ -130,6 +130,20 @@ page 50104 "ICA Setup"
         // ====================================================================
         area(Processing)
         {
+            action(CreateAgent)
+            {
+                Caption = 'Create Agent';
+                Image = User;
+                ToolTip = 'Create the Inventory Check Agent user.';
+
+                trigger OnAction()
+                var
+                    ICAInstall: Codeunit "ICA Install";
+                begin
+                    ICAInstall.CreateInventoryCheckAgent();
+                    Message('Inventory Check Agent created successfully.');
+                end;
+            }
             action(RetrieveEmails)
             {
                 Caption = 'Retrieve Emails';
@@ -185,7 +199,7 @@ page 50104 "ICA Setup"
     trigger OnOpenPage()
     begin
         // Ensure a setup record exists
-        Rec.GetOrCreate();
+        if Rec.FindFirst() then;
     end;
 
     /// <summary>

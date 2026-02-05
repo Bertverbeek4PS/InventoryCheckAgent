@@ -33,7 +33,7 @@ codeunit 50100 "ICA Retrieve Emails"
     trigger OnRun()
     begin
         // Get the setup record and process emails
-        Rec.GetOrCreate();
+        if Rec.FindFirst() then;
         RetrieveAndProcessEmails(Rec);
 
         // Update the last sync timestamp
@@ -117,7 +117,7 @@ codeunit 50100 "ICA Retrieve Emails"
                     // Step 3b: Create or add to agent task
                     // ========================================================
                     if AgentTaskBuilder.TaskExists(
-                        ICASetup."Agent User Security ID",
+                        ICASetup."User Security ID",
                         EmailInbox."Conversation Id")
                     then
                         AddEmailToExistingTask(ICASetup, EmailInbox, ICAEmail)
@@ -174,7 +174,7 @@ codeunit 50100 "ICA Retrieve Emails"
         // ====================================================================
         // Build and create the agent task
         // ====================================================================
-        AgentTaskBuilder.Initialize(ICASetup."Agent User Security ID", TaskTitle)
+        AgentTaskBuilder.Initialize(ICASetup."User Security ID", TaskTitle)
             .SetExternalId(EmailInbox."Conversation Id")
             .AddTaskMessage(AgentMessageBuilder);
 
@@ -231,5 +231,20 @@ codeunit 50100 "ICA Retrieve Emails"
 
         // Link the email to the task message
         ICAEmail.SetAgentMessageFields(AgentTaskMessage);
+    end;
+
+    procedure test()
+    var
+        Agent: Codeunit Agent;
+        AgentMessage: Codeunit "Agent Message";
+        AgentSession: Codeunit "Agent Session";
+        AgentSetup: Codeunit "Agent Setup";
+        AgentSystemPermissions: Codeunit "Agent System Permissions";
+        AgentTask: Codeunit "Agent Task";
+        AgentTaskBuilder: Codeunit "Agent Task Builder";
+        AgentTaskMessageBuilder: Codeunit "Agent Task Message Builder";
+        AgentUserIntervention: Codeunit "Agent User Intervention";
+        AgentUtilities: Codeunit "Agent Utilities";
+    begin
     end;
 }

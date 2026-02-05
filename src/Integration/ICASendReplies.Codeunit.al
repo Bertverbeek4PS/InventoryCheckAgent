@@ -32,7 +32,7 @@ codeunit 50101 "ICA Send Replies"
     trigger OnRun()
     begin
         // Get setup and send pending replies
-        Rec.GetOrCreate();
+        if Rec.FindFirst() then;
         SendPendingReplies(Rec);
 
         // Update sync timestamp
@@ -55,7 +55,7 @@ codeunit 50101 "ICA Send Replies"
         OutputMessage.ReadIsolation(IsolationLevel::ReadCommitted);
         OutputMessage.SetRange(Status, OutputMessage.Status::Reviewed);
         OutputMessage.SetRange(Type, OutputMessage.Type::Output);
-        OutputMessage.SetRange("Agent User Security ID", ICASetup."Agent User Security ID");
+        OutputMessage.SetRange("Agent User Security ID", ICASetup."User Security ID");
 
         if not OutputMessage.FindSet() then
             exit;

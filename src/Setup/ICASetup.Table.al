@@ -20,18 +20,33 @@ table 50102 "ICA Setup"
 
     fields
     {
-        // Primary Key (single record table)
-        field(1; "Primary Key"; Code[10])
+        // Primary Key - User Security ID of the Agent
+        field(1; "User Security ID"; Guid)
         {
-            Caption = 'Primary Key';
+            Caption = 'User Security ID';
+            DataClassification = SystemMetadata;
         }
 
         // ====================================================================
         // Agent User Settings
         // ====================================================================
-        field(10; "Agent User Security ID"; Guid)
+        field(10; "State"; Option)
         {
-            Caption = 'Agent User Security ID';
+            Caption = 'State';
+            OptionMembers = Disabled,Enabled;
+            OptionCaption = 'Disabled,Enabled';
+            DataClassification = SystemMetadata;
+
+            trigger OnValidate()
+            var
+                ICAJobQueueHandler: Codeunit "ICA Job Queue Handler";
+            begin
+                ICAJobQueueHandler.UpdateJobQueueState(Rec);
+            end;
+        }
+        field(11; "Configured By"; Guid)
+        {
+            Caption = 'Configured By';
             DataClassification = SystemMetadata;
         }
 
@@ -70,6 +85,13 @@ table 50102 "ICA Setup"
         {
             Caption = 'Email Monitoring Enabled';
             ToolTip = 'Enable or disable automatic email monitoring.';
+
+            trigger OnValidate()
+            var
+                ICAJobQueueHandler: Codeunit "ICA Job Queue Handler";
+            begin
+                ICAJobQueueHandler.UpdateJobQueueState(Rec);
+            end;
         }
         field(31; "Message Limit"; Integer)
         {
@@ -104,20 +126,20 @@ table 50102 "ICA Setup"
 
     keys
     {
-        key(PK; "Primary Key")
+        key(PK; "User Security ID")
         {
             Clustered = true;
         }
     }
 
     /// <summary>
-    /// Gets or creates the setup record
+    /// Gets or creates the setup record for a given agent user
     /// </summary>
-    internal procedure GetOrCreate()
+    internal procedure GetOrCreate(AgentUserSecurityID: Guid)
     begin
-        if not Rec.Get() then begin
+        if not Rec.Get(AgentUserSecurityID) then begin
             Rec.Init();
-            Rec."Primary Key" := '';
+            Rec."User Security ID" := AgentUserSecurityID;
             Rec."Message Limit" := 100;
             Rec."Earliest Sync At" := CurrentDateTime();
             Rec.Insert(true);

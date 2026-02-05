@@ -7,6 +7,8 @@
 
 namespace Demo.Agent.InventoryCheckAgent;
 
+using System.Threading;
+
 permissionset 50100 "ICA Full Access"
 {
     Caption = 'Inventory Check Agent - Full Access';
@@ -17,10 +19,13 @@ permissionset 50100 "ICA Full Access"
         tabledata "ICA Email" = RIMD,
         tabledata "ICA Sent Message" = RIMD,
         tabledata "ICA Setup" = RIMD,
+        tabledata "Job Queue Entry" = RIMD,
+        tabledata "Job Queue Category" = RIMD,
 
         // Codeunits
         codeunit "ICA Retrieve Emails" = X,
         codeunit "ICA Send Replies" = X,
+        codeunit "ICA Job Queue Handler" = X,
 
         // Pages
         page "ICA Email List" = X,

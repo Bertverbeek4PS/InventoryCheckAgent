@@ -118,6 +118,11 @@ codeunit 50101 "ICA Send Replies"
                 ICASetup."Email Address",
                 CopyStr(InputMessage."Created By Full Name", 1, 250)
             );
+
+            // ====================================================================
+            // Step 3d: Set status to send
+            // ====================================================================
+            AgentMessage.SetStatusToSent(OutputMessage);
         end;
     end;
 }

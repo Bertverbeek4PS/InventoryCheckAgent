@@ -232,19 +232,4 @@ codeunit 50100 "ICA Retrieve Emails"
         // Link the email to the task message
         ICAEmail.SetAgentMessageFields(AgentTaskMessage);
     end;
-
-    procedure test()
-    var
-        Agent: Codeunit Agent;
-        AgentMessage: Codeunit "Agent Message";
-        AgentSession: Codeunit "Agent Session";
-        AgentSetup: Codeunit "Agent Setup";
-        AgentSystemPermissions: Codeunit "Agent System Permissions";
-        AgentTask: Codeunit "Agent Task";
-        AgentTaskBuilder: Codeunit "Agent Task Builder";
-        AgentTaskMessageBuilder: Codeunit "Agent Task Message Builder";
-        AgentUserIntervention: Codeunit "Agent User Intervention";
-        AgentUtilities: Codeunit "Agent Utilities";
-    begin
-    end;
 }
